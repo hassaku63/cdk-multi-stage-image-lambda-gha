@@ -36,5 +36,8 @@ jobs:
       - name: Get dependencies(Node.js)
         run: npm ci
 
+      - name: Synth
+        run: npx cdk synth --verbose --all
+      
       - name: Deploy
         run: npx cdk deploy --verbose --all --require-approval never
