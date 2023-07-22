@@ -12,6 +12,7 @@ export class CdkMultiStageImageLambdaGhaStack extends cdk.Stack {
 
     const func1 = createPythonLambdaFromAsset(this, 'Func1', {
       path: 'src',
+      dockerfile: 'Dockerfile-single-stage',
       handler: 'main.func1',
     });
   }
@@ -20,14 +21,16 @@ export class CdkMultiStageImageLambdaGhaStack extends cdk.Stack {
 interface CreatePythonLambdaFromAssetProps {
   path: string
   handler: string
+  dockerfile?: string
 }
 
 function createPythonLambdaFromAsset(scope: Construct, id: string, props: CreatePythonLambdaFromAssetProps) {
   const f = new aws_lambda.DockerImageFunction(scope, id, {
     code: aws_lambda.DockerImageCode.fromImageAsset(props.path, {
       cmd: [props.handler],
+      file: props.dockerfile ? props.dockerfile : 'Dockerfile',
       // platform: ecr_assets.Platform.LINUX_AMD64,
-      target: 'build-amd64',
+      // target: 'build-amd64',,
     }),
     timeout: cdk.Duration.minutes(1),
     tracing: aws_lambda.Tracing.ACTIVE,
