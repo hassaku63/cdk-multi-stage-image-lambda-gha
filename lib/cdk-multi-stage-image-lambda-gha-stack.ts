@@ -30,7 +30,7 @@ function createPythonLambdaFromAsset(scope: Construct, id: string, props: Create
       cmd: [props.handler],
       file: props.dockerfile ? props.dockerfile : 'Dockerfile',
       // platform: ecr_assets.Platform.LINUX_AMD64,
-      // target: 'build-amd64',,
+      // target: 'build-amd64',
     }),
     timeout: cdk.Duration.minutes(1),
     tracing: aws_lambda.Tracing.ACTIVE,
